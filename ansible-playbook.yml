@@ -15,6 +15,12 @@
     command : sudo systemctl start docker
     become : yes
     become_user : root
+    
+   - name: Pull Docker Image
+      command: docker pull parvatha29/myproject3:{{ build_number }}
+
+    - name: Stop existing container (if running)
+      command: docker rm -f my_app || true
 
   - name: Deploy Docker Container
-    command: docker run -itd -p 8084:8081 parvatha29/myproject3:2
+    command: docker run -itd -p 8084:8081 parvatha29/myproject3:{{ build_number }}
